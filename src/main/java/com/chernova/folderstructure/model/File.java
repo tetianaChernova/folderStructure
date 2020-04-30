@@ -10,16 +10,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name = "files")
 public class File {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long fileId;
 
 	@NotNull

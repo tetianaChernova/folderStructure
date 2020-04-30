@@ -12,16 +12,18 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name = "folder2folders")
 public class Folder {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "folder_id")
 	private Long folderId;
 
