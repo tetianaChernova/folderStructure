@@ -20,11 +20,13 @@ import static java.util.Objects.isNull;
 @Service
 public class DefaultFileService implements FileService {
 
-	private static final String FILE_ALREADY_EXISTS_EXCEPTION = "File with such name already exists in directory ";
-	private static final String FILE_NOT_FOUND_EXCEPTION = "File not found with id: ";
-	private static final String CANNOT_MOVE_FILE_EXCEPTION = "Cannot move file to such folder";
-	private static final String CANNOT_CREATE_FILE_IN_NON_EXISTING_FOLDER_EXCEPTION =
+	private static final String FILE_NOT_FOUND_EXCEPTION_MESSAGE = "File not found with id: ";
+	private static final String CANNOT_MOVE_FILE_EXCEPTION_MESSAGE = "Cannot move file to such folder";
+	private static final String FILE_ALREADY_EXISTS_EXCEPTION_MESSAGE =
+			"File with such name already exists in directory ";
+	private static final String CANNOT_CREATE_FILE_IN_NON_EXISTING_FOLDER_EXCEPTION_MESSAGE =
 			"Cannot create file in non existing folder";
+
 	@Resource
 	private FileRepository fileRepository;
 	@Resource
@@ -34,11 +36,11 @@ public class DefaultFileService implements FileService {
 	public File save(File file) throws FileAlreadyExistsInFolderException, FolderNotFoundException,
 			CannotCreateFileInNonExistingFolderException {
 		if (isNull(file.getFolderId())) {
-			throw new CannotCreateFileInNonExistingFolderException(CANNOT_CREATE_FILE_IN_NON_EXISTING_FOLDER_EXCEPTION);
+			throw new CannotCreateFileInNonExistingFolderException(CANNOT_CREATE_FILE_IN_NON_EXISTING_FOLDER_EXCEPTION_MESSAGE);
 		}
 		Folder folder = folderService.getFolderById(file.getFolderId());
 		if (isPresentInFolderFileWithName(folder, file.getFileName())) {
-			throw new FileAlreadyExistsInFolderException(FILE_ALREADY_EXISTS_EXCEPTION + folder.getFolderName());
+			throw new FileAlreadyExistsInFolderException(FILE_ALREADY_EXISTS_EXCEPTION_MESSAGE + folder.getFolderName());
 		}
 		file.setFolder(folder);
 		return fileRepository.save(file);
@@ -47,7 +49,7 @@ public class DefaultFileService implements FileService {
 	@Override
 	public File getFileById(Long fileId) throws FileNotFoundException {
 		return fileRepository.findById(fileId)
-				.orElseThrow(() -> new FileNotFoundException(FILE_NOT_FOUND_EXCEPTION + fileId));
+				.orElseThrow(() -> new FileNotFoundException(FILE_NOT_FOUND_EXCEPTION_MESSAGE + fileId));
 	}
 
 	@Override
@@ -64,7 +66,7 @@ public class DefaultFileService implements FileService {
 
 	private void checkMovingFileToNotExistingFolder(File file) throws CannotMoveFileException {
 		if (isNull(file.getFolderId())) {
-			throw new CannotMoveFileException(CANNOT_MOVE_FILE_EXCEPTION);
+			throw new CannotMoveFileException(CANNOT_MOVE_FILE_EXCEPTION_MESSAGE);
 		}
 	}
 
@@ -72,13 +74,13 @@ public class DefaultFileService implements FileService {
 			FileAlreadyExistsInFolderException {
 		Folder foundFolder = folderService.getFolderById(file.getFolderId());
 		if (isPresentInFolderFileWithName(foundFolder, file.getFileName())) {
-			throw new FileAlreadyExistsInFolderException(FILE_ALREADY_EXISTS_EXCEPTION + foundFolder.getFolderName());
+			throw new FileAlreadyExistsInFolderException(FILE_ALREADY_EXISTS_EXCEPTION_MESSAGE + foundFolder.getFolderName());
 		}
 	}
 
 	private void checkIfFileWithIdExists(Long fileId) throws FileNotFoundException {
 		if (fileRepository.findById(fileId).isEmpty()) {
-			throw new FileNotFoundException(FILE_NOT_FOUND_EXCEPTION + fileId);
+			throw new FileNotFoundException(FILE_NOT_FOUND_EXCEPTION_MESSAGE + fileId);
 		}
 	}
 
