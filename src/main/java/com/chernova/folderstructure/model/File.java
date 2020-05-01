@@ -1,9 +1,11 @@
 package com.chernova.folderstructure.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,9 +27,13 @@ public class File {
 	private Long fileId;
 
 	@NotNull
-	@ManyToOne
+	@ManyToOne(targetEntity = Folder.class)
 	@JoinColumn(name = "folder_id")
+	@JsonIgnore
 	private Folder folder;
+
+	@Column(name = "folder_id", insertable = false, updatable = false)
+	private Long folderId;
 
 	@NotNull
 	private String fileName;

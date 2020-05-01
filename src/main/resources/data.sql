@@ -1,14 +1,14 @@
-INSERT INTO folder_structure.folder2folders (folder_id, folder_name, father_folder_id)
+INSERT INTO folder_structure.folders(folder_id, folder_name, father_folder_id)
 VALUES (1, '$ROOT$', null);
-INSERT INTO folder_structure.folder2folders (folder_id, folder_name, father_folder_id)
+INSERT INTO folder_structure.folders(folder_id, folder_name, father_folder_id)
 VALUES (2, 'Folder_1', 1);
-INSERT INTO folder_structure.folder2folders (folder_id, folder_name, father_folder_id)
+INSERT INTO folder_structure.folders(folder_id, folder_name, father_folder_id)
 VALUES (3, 'Folder_2', 1);
-INSERT INTO folder_structure.folder2folders (folder_id, folder_name, father_folder_id)
+INSERT INTO folder_structure.folders (folder_id, folder_name, father_folder_id)
 VALUES (4, 'SubFolder_1', 2);
-INSERT INTO folder_structure.folder2folders (folder_id, folder_name, father_folder_id)
+INSERT INTO folder_structure.folders (folder_id, folder_name, father_folder_id)
 VALUES (5, 'SubFolder_2', 2);
-INSERT INTO folder_structure.folder2folders (folder_id, folder_name, father_folder_id)
+INSERT INTO folder_structure.folders (folder_id, folder_name, father_folder_id)
 VALUES (6, 'SubFolder_3', 2);
 
 INSERT INTO folder_structure.files (file_id, folder_id, file_name, mime_type, file_size)

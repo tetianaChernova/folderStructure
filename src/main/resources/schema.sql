@@ -15,27 +15,28 @@
 /*!40101 SET @OLD_SQL_MODE = @@SQL_MODE, SQL_MODE = 'NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES = @@SQL_NOTES, SQL_NOTES = 0 */;
 
-DROP SCHEMA IF EXISTS `folder2folders`;
+DROP SCHEMA IF EXISTS `folder_structure`;
 CREATE SCHEMA IF NOT EXISTS `folder_structure` DEFAULT CHARACTER SET utf8;
 USE `folder_structure`;
 
 --
--- Table structure for table `folder2folders`
+-- Table structure for table `folders`
 --
 
 SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS `folder2folders`;
+DROP TABLE IF EXISTS `folders`;
 SET FOREIGN_KEY_CHECKS = 1;
 /*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `folder2folders`
+CREATE TABLE `folders`
 (
     `folder_id`        bigint       NOT NULL AUTO_INCREMENT,
     `folder_name`      varchar(100) NOT NULL,
     `father_folder_id` bigint DEFAULT NULL,
     PRIMARY KEY (`folder_id`),
-    KEY `folder2folders_folder2folders_folder_id_fk` (`father_folder_id`),
-    CONSTRAINT `folder2folders_folder2folders_folder_id_fk` FOREIGN KEY (`father_folder_id`) REFERENCES `folder2folders` (`folder_id`) ON DELETE CASCADE
+    KEY `folders_folders_folder_id_fk` (`father_folder_id`),
+    CONSTRAINT `folders_folders_folder_id_fk`
+        FOREIGN KEY (`father_folder_id`) REFERENCES `folders` (`folder_id`) ON DELETE CASCADE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 7
   DEFAULT CHARSET = utf8mb4
@@ -56,7 +57,8 @@ CREATE TABLE `files`
     `file_size` bigint       NOT NULL,
     PRIMARY KEY (`file_id`),
     UNIQUE KEY `AK_files` (`folder_id`, `file_name`),
-    CONSTRAINT `files_folder2folders_folder_id_fk` FOREIGN KEY (`folder_id`) REFERENCES `folder2folders` (`folder_id`) ON DELETE CASCADE
+    CONSTRAINT `files_folders_folder_id_fk`
+        FOREIGN KEY (`folder_id`) REFERENCES `folders` (`folder_id`) ON DELETE CASCADE
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 7
   DEFAULT CHARSET = utf8mb4
