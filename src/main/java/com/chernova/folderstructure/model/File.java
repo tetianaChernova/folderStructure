@@ -26,12 +26,12 @@ public class File {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long fileId;
 
-	@NotNull
 	@ManyToOne(targetEntity = Folder.class)
 	@JoinColumn(name = "folder_id")
 	@JsonIgnore
 	private Folder folder;
 
+	@NotNull
 	@Column(name = "folder_id", insertable = false, updatable = false)
 	private Long folderId;
 
